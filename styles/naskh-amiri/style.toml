@@ -1,0 +1,84 @@
+# Midad style manifest — every key is documented in docs/STYLE_FORMAT.md.
+#
+# This file is read by two programs:
+#   * the style compiler (tools/midad_style) → builds dist/ from source/
+#   * the engine (crates/midad-core)        → loads dist/ at runtime
+#
+# Calligraphers: the options, kashida and alternates sections can be edited
+# without touching any code. Run `python -m midad_style compile
+# styles/naskh-amiri` afterwards, then reload the editor.
+
+[style]
+id = "naskh-amiri"
+version = "0.1.0"
+name = { ar = "النسخ — أميري", en = "Naskh — Amiri" }
+description = { ar = "خط النسخ مبني على خط أميري المفتوح المصدر", en = "Naskh style built on the open-source Amiri typeface" }
+license = "OFL-1.1"
+credits = "Amiri © The Amiri Project Authors (Khaled Hosny, Sebastian Kosch). Compiled for Midad."
+upstream = "https://github.com/aliftype/amiri"
+
+[font]
+source = "source/Amiri-Regular.ttf"        # input of the compiler (never loaded at runtime)
+compiled = "dist/MidadNaskh-Regular.ttf"   # output of the compiler, loaded by the engine
+family_name = "Midad Naskh"                # a modified OFL font gets its own name
+
+# Calligraphers measure proportions in rhombic dots (نقاط) made with the
+# reed pen. The editor shows lengths in dots and draws the dot ladder
+# (ميزان) next to each line. In Naskh the alef is five dots tall.
+[metrics]
+nuqta = 139          # one dot, in font units (Amiri alef ≈ 696 units / 5)
+alef_dots = 5
+
+[shaping]
+script = "arab"
+# Extra features applied to the whole text. Positional forms (init/medi/fina),
+# rlig, calt, kern, mark, curs… are always on.
+features = []
+
+[alternates]
+# GSUB feature (lookup type 3) the compiler writes and the engine reads.
+feature = "salt"
+# Features whose substitutions mean "variant of the same letter".
+edge_features = ["rlig", "calt", "liga", "ccmp", "ss01", "ss02", "ss04"]
+max_per_glyph = 32
+# Hand corrections, by glyph id (Amiri ships without glyph names):
+# exclude = [1234, 1235]          # never offer these as alternates
+# extra = { "2162" = [5501] }     # add alternates to one glyph
+
+# Stylistic sets shown as toggles in the editor. Tags and meanings come from
+# Amiri's own feature names (`python -m midad_style inspect <font>` lists them).
+[[options]]
+tag = "ss07"
+label = { ar = "كشيدة مستقيمة (بدون تقويس)", en = "Straight kashida (no curves)" }
+default = false
+
+[[options]]
+tag = "ss01"
+label = { ar = "خفض نقطة الباء بعد الراء والواو", en = "Low beh dot after reh / waw" }
+default = false
+
+[[options]]
+tag = "ss02"
+label = { ar = "شكل بديل للميم المتوسطة مع الألف", en = "Alternate medial meem + final alef" }
+default = false
+
+[[options]]
+tag = "ss04"
+label = { ar = "كاف فارسية بشكل نسخي", en = "Naskh-style gaf" }
+default = false
+
+[[options]]
+tag = "ss06"
+label = { ar = "لفظ الجلالة بدون تشكيل تلقائي", en = "Allah without automatic marks" }
+default = false
+
+[kashida]
+enabled = true
+# Longest elongation a user can drag, in font units (1000 = one em).
+max_length = 1600
+# How many elongations a single word may carry.
+max_per_word = 2
+# Words that are never elongated (compared after removing diacritics).
+exclude_words = ["الله", "لله"]
+# Never elongate right before these letters (calligraphic convention).
+never_before = ["ا", "أ", "إ", "آ"]

@@ -1,0 +1,22 @@
+# Rust
+/target/
+**/target/
+
+# Node / web
+node_modules/
+apps/web/dist/
+apps/web/src/engine/pkg/
+apps/web/public/styles/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.venv/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json

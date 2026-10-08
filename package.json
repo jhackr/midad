@@ -1,0 +1,23 @@
+{
+  "name": "midad-workspace",
+  "private": true,
+  "description": "Midad (مداد) — open-source Arabic calligraphy editor",
+  "license": "MIT OR Apache-2.0",
+  "workspaces": [
+    "apps/web",
+    "apps/desktop"
+  ],
+  "scripts": {
+    "build:wasm": "bash scripts/build-wasm.sh",
+    "styles": "node scripts/sync-styles.mjs",
+    "dev": "npm run dev -w apps/web",
+    "build": "npm run build:wasm && npm run build -w apps/web",
+    "test": "npm run test -w apps/web",
+    "typecheck": "npm run typecheck -w apps/web",
+    "desktop:dev": "npm run tauri -w apps/desktop -- dev",
+    "desktop:build": "npm run tauri -w apps/desktop -- build"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

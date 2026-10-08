@@ -1,0 +1,25 @@
+name: Bug report / بلاغ عن خطأ
+description: Something renders or behaves wrongly
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened? / ماذا حدث؟
+      description: Include the text you typed and, if possible, the .midad file (File → Save piece).
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect? / ما المتوقع؟
+  - type: input
+    id: where
+    attributes:
+      label: Where / أين
+      placeholder: "web (Chrome 130) / desktop (Windows 11) / CLI"
+  - type: input
+    id: style
+    attributes:
+      label: Style / الخط
+      placeholder: naskh-amiri 0.1.0

@@ -1,0 +1,22 @@
+name: Calligraphy style / خط جديد أو تحسين خط
+description: Propose a new style, new letter shapes, or fixes to an existing style
+labels: [style]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type / النوع
+      options:
+        - New style / خط جديد
+        - New shapes for a letter / أشكال جديدة لحرف
+        - Wrong shape or join / شكل أو وصلة غير صحيحة
+        - Kashida or option rules / قواعد المد أو الخيارات
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details / التفاصيل
+      description: Attach images of the expected forms. For new styles, state the license of the drawings (SIL OFL 1.1 is required).
+    validations:
+      required: true

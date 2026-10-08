@@ -1,0 +1,13 @@
+{
+  "compiler": "0.1.0",
+  "output": "MidadNaskh-Regular.ttf",
+  "source_sha256": "ab391c4147d054c48976e98322ad0eefe1427aa0e0502a12a4c75d80a70cfcd7",
+  "manifest_sha256": "dbe4caf3511ca5098b7af9c28fb2df61073a8c4a6517dd189385e8a6700ebe75",
+  "alternates": {
+    "feature": "salt",
+    "glyphs_with_alternates": 4678,
+    "max_per_glyph": 32,
+    "total_entries": 60868,
+    "families": 215
+  }
+}

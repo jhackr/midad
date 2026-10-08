@@ -1,0 +1,36 @@
+[workspace]
+resolver = "3"
+members = ["crates/midad-core", "crates/midad-wasm", "crates/midad-cli"]
+# The desktop shell needs WebKitGTK/WebView2 system libraries; it has its own
+# Cargo workspace so `cargo test` at the root works on any machine.
+exclude = ["apps/desktop/src-tauri"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/jhackr/midad"
+homepage = "https://jhackr.github.io/midad/"
+authors = ["Midad contributors"]
+
+[workspace.dependencies]
+midad-core = { path = "crates/midad-core", version = "0.1.0" }
+harfrust = "0.14"
+skrifa = "0.48"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "1"
+thiserror = "2"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
+
+# Size-optimised profile for the WebAssembly build (used by scripts/build-wasm.sh).
+[profile.wasm]
+inherits = "release"
+opt-level = "s"
+strip = true
+panic = "abort"
