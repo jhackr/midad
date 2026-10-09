@@ -1,8 +1,12 @@
-import { useRef } from 'react';
+// The madder band: wordmark, file, undo/redo at the start; warnings,
+// shortcuts, language and the one worded action, Export, at the end.
 
 import type { Engine } from '../engine/engine';
 import type { StyleSummary } from '../engine/types';
 import type { Lang, Strings } from '../i18n';
+import { shortcutList } from '../i18n';
+import { Hint, IconButton, Menu, MenuItem } from './Floating';
+import { Icon } from './Icon';
 import { Logo } from './Logo';
 
 interface Props {
@@ -10,15 +14,12 @@ interface Props {
   lang: Lang;
   engine: Engine;
   style: StyleSummary;
+  compact: boolean;
   canUndo: boolean;
   canRedo: boolean;
-  showGuides: boolean;
-  zoomPercent: number;
+  warnings: string[];
   onUndo: () => void;
   onRedo: () => void;
-  onZoom: (factor: number) => void;
-  onFit: () => void;
-  onGuides: (v: boolean) => void;
   onNew: () => void;
   onOpen: () => void;
   onSave: () => void;
@@ -28,65 +29,91 @@ interface Props {
 }
 
 export function TopBar(p: Props) {
-  const menu = useRef<HTMLDetailsElement>(null);
-  const run = (fn: () => void) => () => {
-    if (menu.current) menu.current.open = false;
-    fn();
-  };
-
+  const { t } = p;
   return (
-    <header className="topbar">
-      <div className="brand">
-        <Logo engine={p.engine} styleId={p.style.id} label={p.t.appName} />
-        <span className="tagline">{p.t.tagline}</span>
+    <header className="bar">
+      <div className="bar-group">
+        <Logo engine={p.engine} styleId={p.style.id} label={t.appName} />
+        <Menu
+          label={t.file}
+          trigger={(props) => (
+            <button type="button" className="btn btn-icon" aria-label={t.file} {...props}>
+              <Icon name="file" />
+            </button>
+          )}
+        >
+          {(close) => (
+            <>
+              <MenuItem icon="new" label={t.newDoc} onSelect={() => (close(), p.onNew())} />
+              <MenuItem icon="open" label={t.openDoc} onSelect={() => (close(), p.onOpen())} />
+              <MenuItem icon="save" label={t.saveDoc} keys="Ctrl+S" onSelect={() => (close(), p.onSave())} />
+            </>
+          )}
+        </Menu>
+        <span className="bar-rule" aria-hidden="true" />
+        <IconButton icon="undo" label={t.undo} keys="Ctrl+Z" disabled={!p.canUndo} onClick={p.onUndo} />
+        <IconButton icon="redo" label={t.redo} keys="Ctrl+Shift+Z" disabled={!p.canRedo} onClick={p.onRedo} />
       </div>
 
-      <div className="toolbar" role="toolbar" aria-label={p.t.appName}>
-        <details className="menu" ref={menu}>
-          <summary className="tool">{p.t.file}</summary>
-          <div className="menu-list" role="menu">
-            <button role="menuitem" onClick={run(p.onNew)}>{p.t.newDoc}</button>
-            <button role="menuitem" onClick={run(p.onOpen)}>{p.t.openDoc}</button>
-            <button role="menuitem" onClick={run(p.onSave)}>{p.t.saveDoc}</button>
-            <hr />
-            <button role="menuitem" onClick={run(p.onExportSvg)}>{p.t.exportSvg}</button>
-            <button role="menuitem" onClick={run(p.onExportPng)}>{p.t.exportPng}</button>
-          </div>
-        </details>
-
-        <span className="tool-group">
-          <button className="tool" onClick={p.onUndo} disabled={!p.canUndo} title="Ctrl+Z">
-            {p.t.undo}
-          </button>
-          <button className="tool" onClick={p.onRedo} disabled={!p.canRedo} title="Ctrl+Shift+Z">
-            {p.t.redo}
-          </button>
-        </span>
-
-        <span className="tool-group">
-          <button className="tool icon" onClick={() => p.onZoom(1 / 1.25)} aria-label={p.t.zoomOut} title={p.t.zoomOut}>
-            −
-          </button>
-          <button className="tool zoom-readout" onClick={p.onFit} title={p.t.fit}>
-            <span dir="ltr">{p.zoomPercent}%</span>
-          </button>
-          <button className="tool icon" onClick={() => p.onZoom(1.25)} aria-label={p.t.zoomIn} title={p.t.zoomIn}>
-            +
-          </button>
-        </span>
-
-        <label className="tool toggle" title={p.t.guidesHint}>
-          <input type="checkbox" checked={p.showGuides} onChange={(e) => p.onGuides(e.target.checked)} />
-          <span>{p.t.guides}</span>
-        </label>
-
-        <span className="style-name" title={p.t.style}>
-          {p.style.name[p.lang] ?? p.style.name.ar}
-        </span>
-
-        <button className="tool lang" onClick={p.onLang} lang={p.lang === 'ar' ? 'en' : 'ar'}>
-          {p.t.switchLang}
+      <div className="bar-group">
+        {p.warnings.length > 0 && (
+          <Hint label={t.warnings} tone="warn">
+            {p.warnings.map((w) => (
+              <p key={w}>{w}</p>
+            ))}
+          </Hint>
+        )}
+        {!p.compact && (
+          <Menu
+            label={t.shortcuts}
+            align="end"
+            role="dialog"
+            trigger={(props) => (
+              <button type="button" className="btn btn-icon" aria-label={t.shortcuts} {...props}>
+                <Icon name="keyboard" />
+              </button>
+            )}
+          >
+            {() => (
+              <dl className="shortcuts">
+                {shortcutList[p.lang].map(([keys, action]) => (
+                  <div key={keys}>
+                    <dt>{action}</dt>
+                    <dd>
+                      <kbd dir="ltr">{keys}</kbd>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </Menu>
+        )}
+        <button
+          type="button"
+          className="btn btn-icon btn-lang"
+          onClick={p.onLang}
+          aria-label={t.switchLang}
+          lang={p.lang === 'ar' ? 'en' : 'ar'}
+        >
+          {t.langShort}
         </button>
+        <Menu
+          label={t.exportDoc}
+          align="end"
+          trigger={(props) => (
+            <button type="button" className="btn btn-primary" {...props}>
+              <Icon name="export" />
+              <span>{t.exportDoc}</span>
+            </button>
+          )}
+        >
+          {(close) => (
+            <>
+              <MenuItem icon="vector" label={t.exportSvg} note={t.exportSvgNote} onSelect={() => (close(), p.onExportSvg())} />
+              <MenuItem icon="image" label={t.exportPng} note={t.exportPngNote} onSelect={() => (close(), p.onExportPng())} />
+            </>
+          )}
+        </Menu>
       </div>
     </header>
   );

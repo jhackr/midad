@@ -1,5 +1,5 @@
 // The drawing sheet: renders the scene, handles selection, dragging letters,
-// dragging kashida handles, panning and zooming.
+// dragging kashida handles, panning and zooming (wheel, or two fingers).
 //
 // Scene coordinates are font units with y up. Everything is drawn inside
 // one <g transform="scale(1,-1)">; pointer positions are converted back to
@@ -40,6 +40,13 @@ type Drag =
   | { kind: 'pan'; startClient: [number, number]; frame: Frame; scale: number; pointer: number };
 
 const DRAG_THRESHOLD_PX = 3;
+/** Smallest on-screen size of a kashida handle's touch target. */
+const HANDLE_HIT_PX = 30;
+
+type Pinch = { d0: number; mid0: [number, number]; anchor: [number, number]; frame: Frame; scale: number };
+
+const distance = (a: [number, number], b: [number, number]) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+const midpoint = (a: [number, number], b: [number, number]): [number, number] => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
 
 export function Sheet(props: Props) {
   const { engine, styleId, scene, frame, onFrame, selection, onSelect, nuqta } = props;
@@ -47,8 +54,11 @@ export function Sheet(props: Props) {
   const groupRef = useRef<SVGGElement>(null);
   const [drag, setDrag] = useState<Drag | null>(null);
   const [hover, setHover] = useState<string | null>(null);
+  const [box, setBox] = useState<[number, number]>([0, 0]);
   const frameRef = useRef(frame);
   frameRef.current = frame;
+  const pointers = useRef(new Map<number, [number, number]>());
+  const pinch = useRef<Pinch | null>(null);
 
   const selected = selection ? scene.glyphs.find((g) => sameKey(g.key, selection)) : undefined;
 
@@ -81,6 +91,17 @@ export function Sheet(props: Props) {
     // toScene/pxPerUnit read refs only.
   }, [onFrame]);
 
+  // Track the sheet's size so touch targets can be sized in screen pixels.
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const ro = new ResizeObserver(([entry]) => setBox([entry.contentRect.width, entry.contentRect.height]));
+    ro.observe(svg);
+    return () => ro.disconnect();
+  }, []);
+  const unitsPerPx =
+    box[0] > 0 && box[1] > 0 ? 1 / Math.min(box[0] / (frame.x1 - frame.x0), box[1] / (frame.y1 - frame.y0)) : 1;
+
   // Kashida handles: every existing elongation, plus the two joins of the selected letter.
   const visibleSlots = useMemo(() => {
     const around = new Set<number>();
@@ -90,6 +111,13 @@ export function Sheet(props: Props) {
     }
     return scene.kashida_slots.filter((s) => s.length > 0 || around.has(s.after));
   }, [scene, selected]);
+
+  // The dot ruler under an elongation: shown while it is dragged, or while its letter is selected.
+  const rulers = scene.kashida_slots.filter(
+    (s) =>
+      s.length > 0 &&
+      ((drag?.kind === 'kashida' && drag.slot.after === s.after) || (selected && selected.span[1] - 1 === s.after)),
+  );
 
   const ownerOfKashida = (after: number): GlyphKey | null => {
     const g = scene.glyphs.find((x) => x.key && x.key.index === 0 && x.span[0] <= after && after < x.span[1]);
@@ -130,6 +158,19 @@ export function Sheet(props: Props) {
     setDrag({ kind: 'kashida', slot, startX: toScene(e.clientX, e.clientY)[0], pointer: e.pointerId, length: slot.length });
   };
 
+  // Two fingers anywhere on the sheet zoom and pan; they cancel any drag.
+  const onAnyPointerDown = (e: ReactPointerEvent) => {
+    pointers.current.set(e.pointerId, [e.clientX, e.clientY]);
+    if (pointers.current.size !== 2) return;
+    e.stopPropagation();
+    if (drag && (drag.kind === 'kashida' || (drag.kind === 'glyph' && drag.moved))) props.onGestureEnd();
+    setDrag(null);
+    capture(e);
+    const [a, b] = [...pointers.current.values()];
+    const mid = midpoint(a, b);
+    pinch.current = { d0: Math.max(1, distance(a, b)), mid0: mid, anchor: toScene(mid[0], mid[1]), frame, scale: pxPerUnit() };
+  };
+
   const onBackgroundDown = (e: ReactPointerEvent) => {
     if (e.button !== 0 && e.button !== 1) return;
     capture(e);
@@ -137,6 +178,17 @@ export function Sheet(props: Props) {
   };
 
   const onPointerMove = (e: ReactPointerEvent) => {
+    if (pointers.current.has(e.pointerId)) pointers.current.set(e.pointerId, [e.clientX, e.clientY]);
+    const p = pinch.current;
+    if (p && pointers.current.size >= 2) {
+      const [a, b] = [...pointers.current.values()];
+      const factor = distance(a, b) / p.d0;
+      const mid = midpoint(a, b);
+      const s = p.scale * factor;
+      const zoomed = zoomFrame(p.frame, factor, p.anchor[0], p.anchor[1]);
+      onFrame(panFrame(zoomed, -(mid[0] - p.mid0[0]) / s, (mid[1] - p.mid0[1]) / s));
+      return;
+    }
     if (!drag || e.pointerId !== drag.pointer) return;
     if (drag.kind === 'glyph') {
       const [x, y] = toScene(e.clientX, e.clientY);
@@ -164,6 +216,11 @@ export function Sheet(props: Props) {
   };
 
   const onPointerUp = (e: ReactPointerEvent) => {
+    pointers.current.delete(e.pointerId);
+    if (pinch.current) {
+      if (pointers.current.size < 2) pinch.current = null;
+      return;
+    }
     if (!drag || e.pointerId !== drag.pointer) return;
     if (drag.kind === 'pan') {
       const moved = Math.hypot(e.clientX - drag.startClient[0], e.clientY - drag.startClient[1]);
@@ -175,6 +232,10 @@ export function Sheet(props: Props) {
   };
 
   const handleSize = nuqta * 0.7;
+  // Handles and the dot ruler ride on a rail just under the baseline, so they
+  // never cover the letter being edited: the rail sits a pen dot and a bit
+  // below the join, plus enough screen pixels to clear it at any zoom.
+  const railY = (slot: KashidaSlot) => slot.y - nuqta * 1.1 - unitsPerPx * 6;
   const ladderX = scene.bounds.x1 + nuqta * 1.2;
 
   return (
@@ -183,6 +244,7 @@ export function Sheet(props: Props) {
       className={`sheet${drag?.kind === 'pan' ? ' is-panning' : ''}`}
       viewBox={viewBox(frame)}
       preserveAspectRatio="xMidYMid meet"
+      onPointerDownCapture={onAnyPointerDown}
       onPointerDown={onBackgroundDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -230,34 +292,63 @@ export function Sheet(props: Props) {
         })}
 
         {selected?.bounds && (
-          <rect
-            className="selection-box"
-            x={selected.bounds.x0}
-            y={selected.bounds.y0}
-            width={selected.bounds.x1 - selected.bounds.x0}
-            height={selected.bounds.y1 - selected.bounds.y0}
-            vectorEffect="non-scaling-stroke"
-            pointerEvents="none"
-          />
+          <g className="selection" pointerEvents="none">
+            <rect
+              className="selection-box"
+              x={selected.bounds.x0}
+              y={selected.bounds.y0}
+              width={selected.bounds.x1 - selected.bounds.x0}
+              height={selected.bounds.y1 - selected.bounds.y0}
+              vectorEffect="non-scaling-stroke"
+            />
+            {[
+              [selected.bounds.x0, selected.bounds.y0],
+              [selected.bounds.x1, selected.bounds.y0],
+              [selected.bounds.x0, selected.bounds.y1],
+              [selected.bounds.x1, selected.bounds.y1],
+            ].map(([x, y], i) => (
+              <polygon key={i} className="selection-corner" points={rhombus(x, y, unitsPerPx * 9)} />
+            ))}
+          </g>
         )}
 
-        {visibleSlots.map((slot) => (
-          <polygon
-            key={`slot-${slot.after}`}
-            className={`kashida-handle${slot.length > 0 ? ' is-active' : ''}`}
-            points={rhombus(slot.x, slot.y, handleSize)}
-            onPointerDown={(e) => onHandleDown(e, slot)}
-          >
-            <title>{`${toDots(slot.length, nuqta)} ${props.dotsLabel}`}</title>
-          </polygon>
+        {rulers.map((slot) => (
+          <g key={`ruler-${slot.after}`} className="kashida-ruler" aria-hidden="true">
+            {Array.from({ length: Math.floor(slot.length / nuqta + 0.05) }, (_, i) => (
+              <polygon key={i} points={rhombus(slot.x + slot.length - nuqta * i, railY(slot), nuqta * 0.42)} />
+            ))}
+          </g>
         ))}
+
+        {visibleSlots.map((slot) => {
+          const size = Math.max(handleSize, unitsPerPx * 14);
+          return (
+            <g
+              key={`slot-${slot.after}`}
+              className={`kashida-handle${slot.length > 0 ? ' is-active' : ''}`}
+              onPointerDown={(e) => onHandleDown(e, slot)}
+            >
+              <line
+                className="kashida-stem"
+                x1={slot.x}
+                x2={slot.x}
+                y1={slot.y}
+                y2={railY(slot) + size / 2}
+                vectorEffect="non-scaling-stroke"
+              />
+              <polygon className="kashida-hit" points={rhombus(slot.x, railY(slot), Math.max(size, unitsPerPx * HANDLE_HIT_PX))} />
+              <polygon className="kashida-diamond" points={rhombus(slot.x, railY(slot), size)} />
+              <title>{`${toDots(slot.length, nuqta)} ${props.dotsLabel}`}</title>
+            </g>
+          );
+        })}
       </g>
 
       {drag?.kind === 'kashida' && (
         <text
           className="drag-label"
           x={drag.slot.x}
-          y={-drag.slot.y + nuqta * 1.6}
+          y={-railY(drag.slot) + nuqta * 1.3}
           fontSize={nuqta * 0.9}
           textAnchor="middle"
         >

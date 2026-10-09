@@ -47,30 +47,37 @@ max_per_glyph = 32
 
 # Stylistic sets shown as toggles in the editor. Tags and meanings come from
 # Amiri's own feature names (`python -m midad_style inspect <font>` lists them).
+# `sample` is a short word the option visibly changes; the editor draws it
+# as the toggle. Check that the word really changes before adding it.
 [[options]]
 tag = "ss07"
 label = { ar = "كشيدة مستقيمة (بدون تقويس)", en = "Straight kashida (no curves)" }
 default = false
+sample = "بـــه"
 
 [[options]]
 tag = "ss01"
 label = { ar = "خفض نقطة الباء بعد الراء والواو", en = "Low beh dot after reh / waw" }
 default = false
+sample = "ربي"
 
 [[options]]
 tag = "ss02"
 label = { ar = "شكل بديل للميم المتوسطة مع الألف", en = "Alternate medial meem + final alef" }
 default = false
+sample = "طما"
 
 [[options]]
 tag = "ss04"
 label = { ar = "كاف فارسية بشكل نسخي", en = "Naskh-style gaf" }
 default = false
+sample = "برگ"
 
 [[options]]
 tag = "ss06"
 label = { ar = "لفظ الجلالة بدون تشكيل تلقائي", en = "Allah without automatic marks" }
 default = false
+sample = "الله"
 
 [kashida]
 enabled = true
