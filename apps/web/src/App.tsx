@@ -23,6 +23,7 @@ export function App() {
   const t = dictionaries[lang];
 
   useEffect(() => {
+    let cancelled = false;
     Engine.load()
       .then(async (e) => {
         // The style's own font, so the text box previews the chosen style.
@@ -33,9 +34,14 @@ export function App() {
         } catch {
           /* preview font is optional */
         }
-        setEngine(e);
+        if (!cancelled) setEngine(e);
       })
-      .catch((err: unknown) => setFailure(err instanceof Error ? err.message : String(err)));
+      .catch((err: unknown) => {
+        if (!cancelled) setFailure(err instanceof Error ? err.message : String(err));
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
