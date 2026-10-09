@@ -5,11 +5,11 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const pkg = join(root, 'apps/web/src/engine/pkg');
-const wasm = await import(join(pkg, 'midad_wasm.js'));
+const wasm = await import(pathToFileURL(join(pkg, 'midad_wasm.js')).href);
 wasm.initSync({ module: readFileSync(join(pkg, 'midad_wasm_bg.wasm')) });
 
 const engine = new wasm.MidadEngine();

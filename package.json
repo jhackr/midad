@@ -8,7 +8,7 @@
     "apps/desktop"
   ],
   "scripts": {
-    "build:wasm": "bash scripts/build-wasm.sh",
+    "build:wasm": "node scripts/build-wasm.mjs",
     "styles": "node scripts/sync-styles.mjs",
     "dev": "npm run dev -w apps/web",
     "build": "npm run build:wasm && npm run build -w apps/web",
