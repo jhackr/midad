@@ -35,7 +35,7 @@ text edits, style updates and different front-ends.
 | `apps/desktop` | Tauri 2 shell around `apps/web` (native dialogs, file writes, installers). |
 | `styles/` | Style packages: `style.toml`, the source font, the compiled font in `dist/`. |
 | `tools/midad_style` | Python style compiler + font inspector (fontTools). |
-| `scripts/` | `build-wasm.sh`, `sync-styles.mjs` (copies styles into the web app), `smoke-wasm.mjs`. |
+| `scripts/` | `build-wasm.mjs`, `sync-styles.mjs` (copies styles into the web app), `smoke-wasm.mjs`. |
 | `docs/` | This documentation. `docs/ar/` holds the Arabic guides. |
 
 ## The engine (`midad-core`)

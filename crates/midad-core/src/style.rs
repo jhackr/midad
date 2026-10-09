@@ -149,6 +149,7 @@ impl Style {
                     tag: o.tag.clone(),
                     label: o.label.clone(),
                     default: o.default,
+                    sample: o.sample.clone(),
                 })
                 .collect(),
             kashida: KashidaSummary {
@@ -185,6 +186,7 @@ pub struct OptionSummary {
     pub tag: String,
     pub label: Localized,
     pub default: bool,
+    pub sample: Option<String>,
 }
 
 #[derive(Clone, Debug, Serialize)]

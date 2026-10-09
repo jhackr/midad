@@ -120,7 +120,8 @@ export interface StyleSummary {
   glyphs_with_alternates: number;
   nuqta: number;
   alef_dots: number;
-  options: Array<{ tag: string; label: Localized; default: boolean }>;
+  /** `sample`: a word that shows the option's effect, drawn instead of the label. */
+  options: Array<{ tag: string; label: Localized; default: boolean; sample: string | null }>;
   kashida: { enabled: boolean; max_length: number; max_per_word: number };
 }
 

@@ -82,6 +82,24 @@ export function useMidad(engine: Engine): Midad {
   return { editor, scene, doc, revision, selection, selectedGlyph, select: setSelection, act, replace };
 }
 
+/** The stretch on the join after a letter, when it has one. */
+export function stretchAfter(scene: Scene, key: GlyphKey) {
+  const glyph = scene.glyphs.find((g) => sameKey(g.key, key));
+  return glyph ? scene.kashida_slots.find((s) => s.after === glyph.span[1] - 1 && s.length > 0) : undefined;
+}
+
+/** Restore a letter, including the stretch after it, as one undo step. */
+export function resetLetter(editor: EditorHandle, scene: Scene, key: GlyphKey) {
+  const slot = stretchAfter(scene, key);
+  editor.beginGesture();
+  try {
+    editor.resetGlyph(key);
+    if (slot) editor.setKashida(slot.after, undefined);
+  } finally {
+    editor.endGesture();
+  }
+}
+
 /** Selectable glyphs (letters, not marks or elongations) in logical order. */
 export function letterOrder(scene: Scene): GlyphKey[] {
   return scene.glyphs

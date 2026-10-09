@@ -162,6 +162,10 @@ pub struct StyleOption {
     pub label: Localized,
     #[serde(default)]
     pub default: bool,
+    /// A short word that shows the option's effect; the editor draws it
+    /// with the option on and off instead of printing the label.
+    #[serde(default)]
+    pub sample: Option<String>,
 }
 
 /// Calligraphic rules for elongation (kashida / tatweel).

@@ -28,7 +28,7 @@ lto = true
 codegen-units = 1
 opt-level = 3
 
-# Size-optimised profile for the WebAssembly build (used by scripts/build-wasm.sh).
+# Size-optimised profile for the WebAssembly build (used by scripts/build-wasm.mjs).
 [profile.wasm]
 inherits = "release"
 opt-level = "s"

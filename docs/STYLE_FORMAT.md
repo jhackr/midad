@@ -87,13 +87,16 @@ cargo run -p midad-cli -- render -s styles/naskh-amiri -t "بسم الله" -o o
 
 ### `[[options]]`
 
-User-toggleable features (usually stylistic sets) shown as check boxes.
+User-toggleable features (usually stylistic sets). The editor shows each one
+as a tile that draws `sample` with the option on or off; `label` becomes the
+tile's name on hover. Without a `sample`, the label is shown as a switch.
 
 ```toml
 [[options]]
 tag = "ss07"
 label = { ar = "كشيدة مستقيمة (بدون تقويس)", en = "Straight kashida (no curves)" }
 default = false
+sample = "بـــه"   # optional: a short word this option visibly changes
 ```
 
 `midad_style inspect` prints each stylistic set with the name the font

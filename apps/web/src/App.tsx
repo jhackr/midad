@@ -1,18 +1,27 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Panel } from './components/Panel';
+import { Composer } from './components/Composer';
+import { Hint, IconButton } from './components/Floating';
+import { Dot } from './components/Icon';
+import type { Tool } from './components/Inspector';
+import { LetterTools, PieceTools } from './components/Inspector';
 import { Sheet } from './components/Sheet';
 import { TopBar } from './components/TopBar';
 import { Engine } from './engine/engine';
 import type { GlyphKey } from './engine/types';
 import { sameKey } from './engine/types';
-import { letterOrder, useMidad } from './engine/useMidad';
+import { letterOrder, resetLetter, useMidad } from './engine/useMidad';
 import type { Lang } from './i18n';
 import { dictionaries, engineError, warningText } from './i18n';
 import { fileStem, storage, svgToPng } from './lib/files';
 import { openTextFile, saveFile } from './lib/platform';
+import { useMedia } from './lib/useMedia';
 import type { Frame } from './lib/viewport';
 import { fitFrame, zoomFrame } from './lib/viewport';
+
+/** Phones get the bottom-sheet layout; everything wider gets the side column. */
+const PHONE_QUERY = '(max-width: 760px)';
+const NOTICE_MS = 4500;
 
 const NASKH_FAMILY = "'Midad Naskh', 'Readex Pro Variable', serif";
 
@@ -23,6 +32,7 @@ export function App() {
   const t = dictionaries[lang];
 
   useEffect(() => {
+    let cancelled = false;
     Engine.load()
       .then(async (e) => {
         // The style's own font, so the text box previews the chosen style.
@@ -33,9 +43,14 @@ export function App() {
         } catch {
           /* preview font is optional */
         }
-        setEngine(e);
+        if (!cancelled) setEngine(e);
       })
-      .catch((err: unknown) => setFailure(err instanceof Error ? err.message : String(err)));
+      .catch((err: unknown) => {
+        if (!cancelled) setFailure(err instanceof Error ? err.message : String(err));
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -50,6 +65,7 @@ export function App() {
   if (failure) {
     return (
       <main className="splash" role="alert">
+        <Dot className="splash-mark" />
         <h1>{t.loadFailed}</h1>
         <p>{t.loadFailedHint}</p>
         <pre dir="ltr">{failure}</pre>
@@ -58,13 +74,12 @@ export function App() {
   }
   if (!engine) {
     return (
-      <main className="splash" aria-busy="true">
-        <div className="loading-ladder" aria-hidden="true">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <span key={i} style={{ animationDelay: `${i * 140}ms` }} />
+      <main className="splash" aria-busy="true" aria-label={t.loading}>
+        <div className="loading-row" aria-hidden="true">
+          {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+            <span key={i} style={{ animationDelay: `${i * 110}ms` }} />
           ))}
         </div>
-        <p>{t.loading}</p>
       </main>
     );
   }
@@ -88,6 +103,16 @@ function Workspace({ engine, lang, onLang }: { engine: Engine; lang: Lang; onLan
   });
   const [showGuides, setShowGuides] = useState(true);
   const [notice, setNotice] = useState<string | null>(null);
+  const isPhone = useMedia(PHONE_QUERY);
+  const [tool, setTool] = useState<Tool>('shapes');
+  const [pieceOpen, setPieceOpen] = useState(false);
+
+  // Notices fade on their own; a new one restarts the clock.
+  useEffect(() => {
+    if (!notice) return;
+    const id = window.setTimeout(() => setNotice(null), NOTICE_MS);
+    return () => window.clearTimeout(id);
+  }, [notice]);
 
   const fit = useCallback(() => {
     const f = fitFrame(midad.scene);
@@ -171,6 +196,7 @@ function Workspace({ engine, lang, onLang }: { engine: Engine; lang: Lang; onLan
       if (e.code === 'Digit0') return fit();
 
       const key = midad.selection;
+      if (e.code === 'Escape' && pieceOpen) return setPieceOpen(false);
       if (!key) return;
       if (e.code === 'Escape') return midad.select(null);
       if (e.code === 'Tab') {
@@ -188,7 +214,7 @@ function Workspace({ engine, lang, onLang }: { engine: Engine; lang: Lang; onLan
       }
       if (e.code === 'Delete' || e.code === 'Backspace') {
         e.preventDefault();
-        midad.act((ed) => ed.resetGlyph(key));
+        midad.act((ed) => resetLetter(ed, scene, key));
         return;
       }
       const step = e.shiftKey ? style.nuqta : 10;
@@ -209,26 +235,40 @@ function Workspace({ engine, lang, onLang }: { engine: Engine; lang: Lang; onLan
   });
 
   const zoomPercent = Math.round((fitWidth / (frame.x1 - frame.x0)) * 100);
-  const letters = useMemo(() => letterOrder(scene).length, [scene]);
-  const warnings = scene.warnings.map((w) => warningText[lang][w.kind]);
-  const statusMessage = notice ?? warnings[0] ?? null;
+  const warnings = [...new Set(scene.warnings.map((w) => warningText[lang][w.kind]))];
+  const warningKey = warnings.join('|');
+
+  // A new engine warning is announced once; it then stays behind the "!" in the bar.
+  const lastWarnings = useRef('');
+  useEffect(() => {
+    if (warningKey && warningKey !== lastWarnings.current) setNotice(warningKey.split('|')[0]);
+    lastWarnings.current = warningKey;
+  }, [warningKey]);
+
+  const select = (k: GlyphKey | null) => {
+    midad.select(k);
+    if (k) setPieceOpen(false);
+    setNotice(null);
+  };
+
+  const common = { t, lang, engine, style, midad, naskhFamily: NASKH_FAMILY, report };
+  const letterTools = (
+    <LetterTools {...common} compact={isPhone} tool={tool} onTool={setTool} onClose={() => midad.select(null)} />
+  );
 
   return (
-    <div className="app">
+    <div className={isPhone ? 'app is-phone' : 'app'}>
       <TopBar
         t={t}
         lang={lang}
         engine={engine}
         style={style}
+        compact={isPhone}
         canUndo={editor.canUndo()}
         canRedo={editor.canRedo()}
-        showGuides={showGuides}
-        zoomPercent={zoomPercent}
+        warnings={warnings}
         onUndo={() => midad.act((ed) => ed.undo())}
         onRedo={() => midad.act((ed) => ed.redo())}
-        onZoom={(factor) => setFrame((f) => zoomFrame(f, factor))}
-        onFit={fit}
-        onGuides={setShowGuides}
         onNew={actions.create}
         onOpen={actions.open}
         onSave={actions.save}
@@ -238,52 +278,90 @@ function Workspace({ engine, lang, onLang }: { engine: Engine; lang: Lang; onLan
       />
 
       <div className="workspace">
-        <Panel t={t} lang={lang} engine={engine} style={style} midad={midad} naskhFamily={NASKH_FAMILY} report={report} />
+        {!isPhone && (
+          <aside className="inspector" aria-label={midad.selection ? t.letter : t.piece}>
+            {midad.selection ? letterTools : <PieceTools {...common} />}
+          </aside>
+        )}
+        {!isPhone && <div className="seam" aria-hidden="true" />}
 
-        <main className="stage" aria-label={doc.text}>
-          <Sheet
-            engine={engine}
-            styleId={style.id}
-            scene={scene}
-            frame={frame}
-            onFrame={setFrame}
-            selection={midad.selection}
-            onSelect={(k) => {
-              midad.select(k);
-              setNotice(null);
-            }}
-            offsetOf={offsetOf}
-            onMove={(key, dx, dy) => midad.act((ed) => ed.setOffset(key, dx, dy))}
-            onKashida={(after, length) => report(midad.act((ed) => ed.setKashida(after, length)))}
-            onGestureStart={() => editor.beginGesture()}
-            onGestureEnd={() => editor.endGesture()}
-            showGuides={showGuides}
-            nuqta={style.nuqta}
-            alefDots={style.alef_dots}
-            dotsLabel={t.dots}
-          />
+        <main className="stage">
+          <div className="sheet-frame">
+            <Sheet
+              engine={engine}
+              styleId={style.id}
+              scene={scene}
+              frame={frame}
+              onFrame={setFrame}
+              selection={midad.selection}
+              onSelect={select}
+              offsetOf={offsetOf}
+              onMove={(key, dx, dy) => midad.act((ed) => ed.setOffset(key, dx, dy))}
+              onKashida={(after, length) => report(midad.act((ed) => ed.setKashida(after, length)))}
+              onGestureStart={() => editor.beginGesture()}
+              onGestureEnd={() => editor.endGesture()}
+              showGuides={showGuides}
+              nuqta={style.nuqta}
+              alefDots={style.alef_dots}
+              dotsLabel={t.dots}
+            />
+
+            <div className="sheet-tools">
+              <Hint label={`${t.moreInfo}: ${t.letter}`} side="above">
+                {t.sheetHelp}
+              </Hint>
+              <IconButton
+                icon="ladder"
+                label={`${t.guides}: ${t.guidesHint}`}
+                side="above"
+                aria-pressed={showGuides}
+                className="is-toggle"
+                onClick={() => setShowGuides((g) => !g)}
+              />
+              <span className="tools-rule" aria-hidden="true" />
+              <span className="sheet-zoom" dir="ltr">
+                {!isPhone && (
+                  <IconButton icon="minus" label={t.zoomOut} keys="−" side="above" onClick={() => setFrame((f) => zoomFrame(f, 0.8))} />
+                )}
+                <button type="button" className="btn zoom-readout" onClick={fit} aria-label={`${t.fit} (${zoomPercent}%)`}>
+                  <span dir="ltr">{zoomPercent}%</span>
+                </button>
+                {!isPhone && (
+                  <IconButton icon="plus" label={t.zoomIn} keys="+" side="above" onClick={() => setFrame((f) => zoomFrame(f, 1.25))} />
+                )}
+              </span>
+            </div>
+
+            {notice && (
+              <button type="button" className="toast" role="status" onClick={() => setNotice(null)} aria-label={`${notice} (${t.dismiss})`}>
+                <Dot />
+                <span>{notice}</span>
+              </button>
+            )}
+          </div>
+
+          {!(isPhone && (midad.selection || pieceOpen)) && (
+            <Composer
+              value={doc.text}
+              placeholder={t.textPlaceholder}
+              label={t.text}
+              fontFamily={NASKH_FAMILY}
+              onChange={(text) => midad.act((ed) => ed.setText(text))}
+            >
+              {isPhone && (
+                <IconButton icon="sliders" label={t.pieceSettings} side="above" onClick={() => setPieceOpen(true)} />
+              )}
+            </Composer>
+          )}
         </main>
       </div>
 
-      <footer className="statusbar">
-        <p className={statusMessage ? 'status-message is-warning' : 'status-message'} role="status">
-          {statusMessage ?? (
-            <>
-              <span>{t.hintSelect}</span>
-              <span>{t.hintDrag}</span>
-              <span>{t.hintKashida}</span>
-            </>
-          )}
-        </p>
-        <p className="status-meta">
-          <span>
-            {t.lettersLabel} <b>{letters}</b>
-          </span>
-          <span>
-            {t.linesLabel} <b>{scene.lines.length}</b>
-          </span>
-        </p>
-      </footer>
+      {isPhone && midad.selection && <div className="dock">{letterTools}</div>}
+      {isPhone && !midad.selection && pieceOpen && (
+        <div className="dock">
+          <PieceTools {...common} onClose={() => setPieceOpen(false)} />
+        </div>
+      )}
     </div>
   );
 }

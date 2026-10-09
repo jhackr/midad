@@ -20,6 +20,12 @@ interface StyleIndex {
   styles: Array<{ id: string; manifest: string; font: string }>;
 }
 
+// One wasm instance per page. wasm-bindgen's `init()` is not re-entrant: two
+// overlapping calls (React StrictMode runs effects twice in development) each
+// instantiate the module, and objects made on the first instance are then
+// called on the second, corrupting memory.
+let ready: Promise<unknown> | undefined;
+
 /** Loaded engine + styles + a per-style outline cache. */
 export class Engine {
   private outlines = new Map<string, Map<number, GlyphOutline>>();
@@ -32,7 +38,7 @@ export class Engine {
 
   /** Initialise wasm and load every style listed in `styles/index.json`. */
   static async load(base: string = import.meta.env.BASE_URL): Promise<Engine> {
-    await init();
+    await (ready ??= init());
     const inner = new MidadEngine();
     const index: StyleIndex = await fetchJson(`${base}styles/index.json`);
     const styles: StyleSummary[] = [];

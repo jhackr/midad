@@ -1,0 +1,526 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T00:00:00Z",
+  "title": "Design System: Midad",
+  "extensions": {
+    "colorMeta": {
+      "wool-50": {
+        "role": "neutral",
+        "displayName": "Bleached Wool",
+        "tonalRamp": [
+          "#1f1915",
+          "#342b25",
+          "#62574d",
+          "#8a7e73",
+          "#ada395",
+          "#d8d1c5",
+          "#eeeae3",
+          "#fdfcfa"
+        ]
+      },
+      "wool-100": {
+        "role": "neutral",
+        "displayName": "Light Wool",
+        "tonalRamp": [
+          "#1f1915",
+          "#342b25",
+          "#62574d",
+          "#8a7e73",
+          "#ada395",
+          "#d8d1c5",
+          "#eeeae3",
+          "#fdfcfa"
+        ]
+      },
+      "wool-200": {
+        "role": "neutral",
+        "displayName": "Wool Ground",
+        "tonalRamp": [
+          "#1f1915",
+          "#342b25",
+          "#62574d",
+          "#8a7e73",
+          "#ada395",
+          "#d8d1c5",
+          "#eeeae3",
+          "#fdfcfa"
+        ]
+      },
+      "wool-300": {
+        "role": "neutral",
+        "displayName": "Wool Rule",
+        "tonalRamp": [
+          "#1f1915",
+          "#342b25",
+          "#62574d",
+          "#8a7e73",
+          "#ada395",
+          "#d8d1c5",
+          "#eeeae3",
+          "#fdfcfa"
+        ]
+      },
+      "wool-400": {
+        "role": "neutral",
+        "displayName": "Grey Wool",
+        "tonalRamp": [
+          "#1f1915",
+          "#342b25",
+          "#62574d",
+          "#8a7e73",
+          "#ada395",
+          "#d8d1c5",
+          "#eeeae3",
+          "#fdfcfa"
+        ]
+      },
+      "hair-500": {
+        "role": "neutral",
+        "displayName": "Goat Hair 500",
+        "tonalRamp": [
+          "#1f1915",
+          "#342b25",
+          "#62574d",
+          "#8a7e73",
+          "#ada395",
+          "#d8d1c5",
+          "#eeeae3",
+          "#fdfcfa"
+        ]
+      },
+      "hair-600": {
+        "role": "neutral",
+        "displayName": "Goat Hair 600",
+        "tonalRamp": [
+          "#1f1915",
+          "#342b25",
+          "#62574d",
+          "#8a7e73",
+          "#ada395",
+          "#d8d1c5",
+          "#eeeae3",
+          "#fdfcfa"
+        ]
+      },
+      "hair-700": {
+        "role": "neutral",
+        "displayName": "Goat Hair 700",
+        "tonalRamp": [
+          "#1f1915",
+          "#342b25",
+          "#62574d",
+          "#8a7e73",
+          "#ada395",
+          "#d8d1c5",
+          "#eeeae3",
+          "#fdfcfa"
+        ]
+      },
+      "hair-800": {
+        "role": "neutral",
+        "displayName": "Goat Hair 800",
+        "tonalRamp": [
+          "#1f1915",
+          "#342b25",
+          "#62574d",
+          "#8a7e73",
+          "#ada395",
+          "#d8d1c5",
+          "#eeeae3",
+          "#fdfcfa"
+        ]
+      },
+      "hair-900": {
+        "role": "neutral",
+        "displayName": "Goat Hair (Ink)",
+        "tonalRamp": [
+          "#1f1915",
+          "#342b25",
+          "#62574d",
+          "#8a7e73",
+          "#ada395",
+          "#d8d1c5",
+          "#eeeae3",
+          "#fdfcfa"
+        ]
+      },
+      "madder-600": {
+        "role": "primary",
+        "displayName": "Madder Red",
+        "tonalRamp": [
+          "#3a110c",
+          "#5c1a12",
+          "#7c2118",
+          "#962a1f",
+          "#b13a2c",
+          "#d98a7e",
+          "#f0d4ce",
+          "#f8ebe8"
+        ]
+      },
+      "madder-700": {
+        "role": "primary",
+        "displayName": "Deep Madder",
+        "tonalRamp": [
+          "#3a110c",
+          "#5c1a12",
+          "#7c2118",
+          "#962a1f",
+          "#b13a2c",
+          "#d98a7e",
+          "#f0d4ce",
+          "#f8ebe8"
+        ]
+      },
+      "madder-500": {
+        "role": "primary",
+        "displayName": "Madder 500",
+        "tonalRamp": [
+          "#3a110c",
+          "#5c1a12",
+          "#7c2118",
+          "#962a1f",
+          "#b13a2c",
+          "#d98a7e",
+          "#f0d4ce",
+          "#f8ebe8"
+        ]
+      },
+      "madder-100": {
+        "role": "primary",
+        "displayName": "Madder 100",
+        "tonalRamp": [
+          "#3a110c",
+          "#5c1a12",
+          "#7c2118",
+          "#962a1f",
+          "#b13a2c",
+          "#d98a7e",
+          "#f0d4ce",
+          "#f8ebe8"
+        ]
+      },
+      "madder-50": {
+        "role": "primary",
+        "displayName": "Madder Wash",
+        "tonalRamp": [
+          "#3a110c",
+          "#5c1a12",
+          "#7c2118",
+          "#962a1f",
+          "#b13a2c",
+          "#d98a7e",
+          "#f0d4ce",
+          "#f8ebe8"
+        ]
+      },
+      "on-madder": {
+        "role": "primary",
+        "displayName": "Madder Cream",
+        "tonalRamp": [
+          "#3a110c",
+          "#5c1a12",
+          "#7c2118",
+          "#962a1f",
+          "#b13a2c",
+          "#d98a7e",
+          "#f0d4ce",
+          "#f8ebe8"
+        ]
+      },
+      "saffron-500": {
+        "role": "secondary",
+        "displayName": "Saffron",
+        "tonalRamp": [
+          "#3d2805",
+          "#5e3e08",
+          "#8a5a0d",
+          "#b87c18",
+          "#d99a2b",
+          "#e8b65a",
+          "#f2cf86",
+          "#faecc9"
+        ]
+      },
+      "saffron-700": {
+        "role": "secondary",
+        "displayName": "Saffron Dark",
+        "tonalRamp": [
+          "#3d2805",
+          "#5e3e08",
+          "#8a5a0d",
+          "#b87c18",
+          "#d99a2b",
+          "#e8b65a",
+          "#f2cf86",
+          "#faecc9"
+        ]
+      },
+      "saffron-300": {
+        "role": "secondary",
+        "displayName": "Saffron Light",
+        "tonalRamp": [
+          "#3d2805",
+          "#5e3e08",
+          "#8a5a0d",
+          "#b87c18",
+          "#d99a2b",
+          "#e8b65a",
+          "#f2cf86",
+          "#faecc9"
+        ]
+      },
+      "henna-500": {
+        "role": "tertiary",
+        "displayName": "Henna",
+        "tonalRamp": [
+          "#3b1708",
+          "#5c240d",
+          "#823213",
+          "#a54418",
+          "#c65a1e",
+          "#df8a5a",
+          "#efbc9c",
+          "#f9e6da"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "work-display": {
+        "displayName": "Work Display",
+        "purpose": "The selected letter in the inspector header, in the style's own font, coloured madder (34px in the dock)."
+      },
+      "work-input": {
+        "displayName": "Work Input",
+        "purpose": "The one-line composer under the sheet (22px on phones)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Style name; the Export word."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Base UI text and menu items."
+      },
+      "readout": {
+        "displayName": "Readout",
+        "purpose": "Numeric readouts, zoom, shortcuts and switch labels; tabular figures."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Inspector section names, visible only while the section is hovered or focused."
+      },
+      "tab": {
+        "displayName": "Tab",
+        "purpose": "Phone tool-tab words; keycaps."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift",
+        "value": "0 1px 2px rgb(31 25 21 / 0.08), 0 10px 28px rgb(31 25 21 / 0.1)",
+        "purpose": "The sheet only."
+      },
+      {
+        "name": "float",
+        "value": "0 2px 4px rgb(31 25 21 / 0.14), 0 14px 34px rgb(31 25 21 / 0.18)",
+        "purpose": "Tips, bubbles, menus, toast."
+      },
+      {
+        "name": "rest-hairline",
+        "value": "0 1px 2px rgb(31 25 21 / 0.05)",
+        "purpose": "Composer (0.05) and sheet-tools cluster (0.06)."
+      },
+      {
+        "name": "dock-rise",
+        "value": "0 -8px 24px rgb(31 25 21 / 0.08)",
+        "purpose": "The phone dock's upward cast."
+      },
+      {
+        "name": "selected-ring",
+        "value": "inset 0 0 0 1px #962a1f",
+        "purpose": "Selected tiles: selection is a ring, never a lift."
+      },
+      {
+        "name": "warn-edge",
+        "value": "inset 0 2px 0 #d99a2b",
+        "purpose": "Top edge of warning bubbles, combined with float."
+      }
+    ],
+    "motion": [
+      {
+        "name": "step",
+        "value": "140ms",
+        "purpose": "Default duration for state changes, the toast drop and the switch knob."
+      },
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.2, 0.9, 0.25, 1)",
+        "purpose": "House easing: quick start, settled stop."
+      },
+      {
+        "name": "appear",
+        "value": "90ms opacity",
+        "purpose": "Bubbles and menus fade in."
+      },
+      {
+        "name": "rise",
+        "value": "160ms, 16px",
+        "purpose": "The phone dock's entrance."
+      },
+      {
+        "name": "weave",
+        "value": "1.1s steps(1, end) infinite",
+        "purpose": "Loading row of rhombi beaten in sequence; still under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "medium",
+        "value": "1080px",
+        "purpose": "The inspector narrows from 304px to 276px."
+      },
+      {
+        "name": "phone",
+        "value": "760px",
+        "purpose": "The inspector becomes the bottom dock; 40-44px targets; band 48px with a 6px weave."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Madder Band",
+      "kind": "nav",
+      "refersTo": "band",
+      "description": "The shell header: madder with a woven goat-hair edge, icon controls, and the one worded action.",
+      "html": "<header class=\"ds-band\" dir=\"rtl\"><div class=\"ds-band-group\"><span class=\"ds-wordmark\">مداد</span><button class=\"ds-band-btn\" aria-label=\"تراجع\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M9 14.5 4.5 10 9 5.5M4.5 10h10a5 5 0 0 1 0 10H11\"/></svg></button></div><button class=\"ds-band-primary\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3.5v11.5M7 10l5 5 5-5M5 20.5h14\"/></svg><span>تصدير</span></button></header>",
+      "css": ".ds-band{display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px;padding:0 10px 8px;background:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='8'%3E%3Crect width='24' height='8' fill='%231f1915'/%3E%3Cpath d='M6 1l3 3-3 3-3-3z' fill='%23f3eee6'/%3E%3Cpath d='M18 1l3 3-3 3-3-3z' fill='%23f3eee6'/%3E%3Cpath d='M18 3l1 1-1 1-1-1z' fill='%23962a1f'/%3E%3C/svg%3E\") left bottom / 24px 8px repeat-x, var(--madder-600, #962a1f);color:var(--on-madder, #faf1ec);font-family:var(--font-ui, 'Readex Pro Variable', 'Segoe UI', system-ui, sans-serif);font-size:14px} .ds-band-group{display:flex;align-items:center;gap:2px} .ds-wordmark{font-family:Amiri,serif;font-size:26px;margin-inline:4px 10px} .ds-band-btn{display:inline-grid;place-items:center;width:36px;height:36px;border:0;border-radius:0;background:transparent;color:inherit;cursor:pointer;transition:background-color 140ms cubic-bezier(0.2, 0.9, 0.25, 1)} .ds-band-btn:hover{background:rgb(255 255 255 / 0.13);color:#fff} .ds-band-btn:active{background:rgb(0 0 0 / 0.14)} .ds-band-btn:focus-visible,.ds-band-primary:focus-visible{outline:2px solid var(--on-madder, #faf1ec);outline-offset:2px} .ds-band-primary{display:inline-flex;align-items:center;gap:8px;height:36px;padding-inline:12px 16px;border:0;border-radius:0;background:var(--wool-50, #fdfcfa);color:var(--madder-700, #7c2118);font:600 14px/1.5 var(--font-ui, 'Readex Pro Variable', 'Segoe UI', system-ui, sans-serif);cursor:pointer;transition:background-color 140ms cubic-bezier(0.2, 0.9, 0.25, 1)} .ds-band-primary:hover{background:#fff} .ds-band-primary:active{background:var(--madder-50, #f8ebe8)}"
+    },
+    {
+      "name": "Ghost Icon Button",
+      "kind": "button",
+      "refersTo": "button-icon",
+      "description": "Every familiar control: a square, transparent 36px button whose name appears in a tip on hover.",
+      "html": "<button class=\"ds-btn-icon\" aria-label=\"Undo\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M9 14.5 4.5 10 9 5.5M4.5 10h10a5 5 0 0 1 0 10H11\"/></svg></button>",
+      "css": ".ds-btn-icon{display:inline-grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:0;background:transparent;color:var(--hair-700, #4a4038);cursor:pointer;transition:background-color 140ms cubic-bezier(0.2, 0.9, 0.25, 1),color 140ms cubic-bezier(0.2, 0.9, 0.25, 1)} .ds-btn-icon:hover{background:var(--wool-200, #d8d1c5);color:var(--hair-900, #1f1915)} .ds-btn-icon:active{background:var(--wool-300, #c9c1b4)} .ds-btn-icon:focus-visible{outline:2px solid var(--madder-600, #962a1f);outline-offset:2px} .ds-btn-icon:disabled{color:var(--wool-400, #ada395);cursor:default;background:transparent}"
+    },
+    {
+      "name": "Option Tile",
+      "kind": "card",
+      "refersTo": "tile",
+      "description": "A shape or style option shown as its own engine-drawn sample; selected is a madder ring and a madder sample.",
+      "html": "<div class=\"ds-tiles\" dir=\"rtl\"><button class=\"ds-tile\" aria-pressed=\"true\"><span class=\"ds-tile-state\"></span><span class=\"ds-sample\">بـــه</span></button><button class=\"ds-tile\" aria-pressed=\"false\"><span class=\"ds-tile-state\"></span><span class=\"ds-sample\">ربي</span></button></div>",
+      "css": ".ds-tiles{display:grid;grid-template-columns:repeat(2,76px);gap:6px} .ds-tile{position:relative;display:grid;place-items:center;height:58px;padding:8px 10px;border:1px solid var(--wool-300, #c9c1b4);border-radius:0;background:var(--wool-50, #fdfcfa);color:var(--hair-900, #1f1915);cursor:pointer;transition:border-color 140ms cubic-bezier(0.2, 0.9, 0.25, 1)} .ds-tile:hover{border-color:var(--hair-500, #8a7e73)} .ds-tile:focus-visible{outline:2px solid var(--madder-600, #962a1f);outline-offset:2px} .ds-tile[aria-pressed=true]{border-color:var(--madder-600, #962a1f);box-shadow:inset 0 0 0 1px var(--madder-600, #962a1f);background:#fff;color:var(--madder-600, #962a1f)} .ds-sample{font-family:Amiri,serif;font-size:24px;line-height:1} .ds-tile-state{position:absolute;top:5px;inset-inline-start:5px;width:8px;height:8px;background:var(--hair-500, #8a7e73);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)} .ds-tile[aria-pressed=true] .ds-tile-state{background:var(--madder-600, #962a1f)}"
+    },
+    {
+      "name": "Diamond Slider",
+      "kind": "custom",
+      "refersTo": "diamond-slider",
+      "description": "Kashida length as a row of rhombi, one per nuqta, filling from the right in saffron.",
+      "html": "<div class=\"ds-dslider\" role=\"slider\" tabindex=\"0\" aria-valuemin=\"0\" aria-valuemax=\"5\" aria-valuenow=\"2\" aria-label=\"Kashida\"><span class=\"ds-d\"></span><span class=\"ds-d\"></span><span class=\"ds-d\"></span><span class=\"ds-d is-full\"></span><span class=\"ds-d is-full\"></span></div>",
+      "css": ".ds-dslider{display:inline-flex;gap:2px;padding:6px 0;cursor:ew-resize} .ds-dslider:focus-visible{outline:2px solid var(--madder-600, #962a1f);outline-offset:2px} .ds-d{position:relative;width:15px;height:15px;background:var(--wool-400, #ada395);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)} .ds-d::after{content:'';position:absolute;inset:1.5px;background:var(--wool-50, #fdfcfa);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)} .ds-d.is-full{background:var(--saffron-700, #8a5a0d)} .ds-d.is-full::after{background:var(--saffron-500, #d99a2b)} .ds-dslider:hover .ds-d:not(.is-full){background:var(--hair-500, #8a7e73)}"
+    },
+    {
+      "name": "Rhombus Range",
+      "kind": "input",
+      "refersTo": "range",
+      "description": "Hairline track with a rhombus knob that turns madder under the hand.",
+      "html": "<input class=\"ds-range\" type=\"range\" min=\"0\" max=\"100\" value=\"70\" aria-label=\"Line spacing\">",
+      "css": ".ds-range{width:220px;height:28px;margin:0;background:transparent;appearance:none;-webkit-appearance:none;cursor:pointer} .ds-range::-webkit-slider-runnable-track{height:2px;background:linear-gradient(to right,var(--hair-800, #342b25) 0 70%,var(--wool-400, #ada395) 70% 100%)} .ds-range::-moz-range-track{height:2px;background:var(--wool-400, #ada395)} .ds-range::-webkit-slider-thumb{width:16px;height:16px;margin-top:-7px;border:0;background:var(--hair-900, #1f1915);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);-webkit-appearance:none;transition:background-color 140ms cubic-bezier(0.2, 0.9, 0.25, 1)} .ds-range::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:0;background:var(--hair-900, #1f1915);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)} .ds-range:hover::-webkit-slider-thumb{background:var(--madder-600, #962a1f)} .ds-range:hover::-moz-range-thumb{background:var(--madder-600, #962a1f)} .ds-range:focus-visible{outline:2px solid var(--madder-600, #962a1f)}"
+    },
+    {
+      "name": "Stepper Field",
+      "kind": "input",
+      "refersTo": "stepper-field",
+      "description": "Square numeric field with ghost minus/plus cells and a rhombus unit mark (nuqat).",
+      "html": "<div class=\"ds-stepper\"><button class=\"ds-step\" aria-label=\"Less\">−</button><input value=\"1.5\" aria-label=\"Offset\"><span class=\"ds-unit\"></span><button class=\"ds-step\" aria-label=\"More\">+</button></div>",
+      "css": ".ds-stepper{display:flex;align-items:center;width:200px;height:36px;border:1px solid var(--wool-300, #c9c1b4);border-radius:0;background:var(--wool-50, #fdfcfa);font-family:var(--font-ui, 'Readex Pro Variable', 'Segoe UI', system-ui, sans-serif);overflow:hidden} .ds-stepper:focus-within{border-color:var(--hair-500, #8a7e73)} .ds-stepper input{flex:1;min-width:0;height:100%;border:0;background:transparent;text-align:center;font:400 14px var(--font-ui, 'Readex Pro Variable', 'Segoe UI', system-ui, sans-serif);font-variant-numeric:tabular-nums;color:var(--hair-900, #1f1915)} .ds-stepper input:focus{outline:none} .ds-step{width:36px;height:100%;border:0;background:transparent;color:var(--hair-700, #4a4038);font-size:18px;cursor:pointer} .ds-step:hover{background:var(--wool-200, #d8d1c5)} .ds-step:active{background:var(--wool-300, #c9c1b4)} .ds-step:focus-visible{outline:2px solid var(--madder-600, #962a1f);outline-offset:-2px} .ds-unit{width:8px;height:8px;margin-inline:2px 8px;background:var(--hair-500, #8a7e73);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}"
+    },
+    {
+      "name": "Rhombus Switch",
+      "kind": "input",
+      "refersTo": "switch",
+      "description": "An option without a sample: a square woven tab with a rhombus knob; on is madder.",
+      "html": "<label class=\"ds-switch\"><input type=\"checkbox\" checked><span class=\"ds-track\"></span><span>Fill with tatweel</span></label>",
+      "css": ".ds-switch{position:relative;display:inline-grid;grid-template-columns:auto 1fr;align-items:center;gap:10px;font:400 13px/1.5 var(--font-ui, 'Readex Pro Variable', 'Segoe UI', system-ui, sans-serif);color:var(--hair-800, #342b25);cursor:pointer} .ds-switch input{position:absolute;opacity:0;width:1px;height:1px} .ds-track{position:relative;width:32px;height:18px;border:1px solid var(--hair-500, #8a7e73);border-radius:0;background:var(--wool-200, #d8d1c5);transition:background-color 140ms cubic-bezier(0.2, 0.9, 0.25, 1)} .ds-track::after{content:'';position:absolute;top:2px;inset-inline-start:2px;width:12px;height:12px;background:var(--hair-600, #62574d);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);transition:inset-inline-start 140ms cubic-bezier(0.2, 0.9, 0.25, 1)} .ds-switch input:checked+.ds-track{border-color:var(--madder-600, #962a1f);background:var(--madder-600, #962a1f)} .ds-switch input:checked+.ds-track::after{inset-inline-start:16px;background:var(--wool-50, #fdfcfa)} .ds-switch input:focus-visible+.ds-track{outline:2px solid var(--madder-600, #962a1f);outline-offset:2px}"
+    },
+    {
+      "name": "Rhombus Hint",
+      "kind": "custom",
+      "refersTo": "hint",
+      "description": "The only home of explanation text: an outlined rhombus '!' that fills and opens a dark bubble on hover or tap.",
+      "html": "<span class=\"ds-hint-wrap\"><button class=\"ds-hint\" aria-label=\"Explain\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path class=\"ds-hint-shape\" d=\"M8 .9 15.1 8 8 15.1.9 8z\"/><path class=\"ds-hint-glyph\" d=\"M8 4.6v4.3\"/><circle class=\"ds-hint-dot\" cx=\"8\" cy=\"11.3\" r=\".95\"/></svg></button><span class=\"ds-bubble\" role=\"tooltip\">Drag the diamond under a join to stretch it, counted in nuqat.</span></span>",
+      "css": ".ds-hint-wrap{position:relative;display:inline-block;font-family:var(--font-ui, 'Readex Pro Variable', 'Segoe UI', system-ui, sans-serif)} .ds-hint{display:inline-grid;place-items:center;width:24px;height:24px;padding:0;border:0;border-radius:0;background:transparent;cursor:help} .ds-hint svg{overflow:visible} .ds-hint-shape{fill:none;stroke:var(--hair-600, #62574d);stroke-width:1.2;stroke-linejoin:round;transition:fill 140ms cubic-bezier(0.2, 0.9, 0.25, 1)} .ds-hint-glyph{stroke:var(--hair-700, #4a4038);stroke-width:1.5;stroke-linecap:round} .ds-hint-dot{fill:var(--hair-700, #4a4038)} .ds-hint:hover .ds-hint-shape,.ds-hint:focus-visible .ds-hint-shape{fill:var(--hair-900, #1f1915);stroke:var(--hair-900, #1f1915)} .ds-hint:hover .ds-hint-glyph,.ds-hint:focus-visible .ds-hint-glyph{stroke:var(--wool-50, #fdfcfa)} .ds-hint:hover .ds-hint-dot,.ds-hint:focus-visible .ds-hint-dot{fill:var(--wool-50, #fdfcfa)} .ds-hint:focus-visible{outline:2px solid var(--madder-600, #962a1f);outline-offset:2px} .ds-bubble{position:absolute;top:30px;inset-inline-start:0;width:240px;padding:10px 13px;border-radius:0;background:var(--hair-900, #1f1915);color:var(--wool-50, #fdfcfa);font-size:13px;line-height:1.65;box-shadow:0 2px 4px rgb(31 25 21 / 0.14),0 14px 34px rgb(31 25 21 / 0.18);opacity:0;pointer-events:none;transition:opacity 90ms cubic-bezier(0.2, 0.9, 0.25, 1)} .ds-hint:hover+.ds-bubble,.ds-hint:focus-visible+.ds-bubble{opacity:1}"
+    },
+    {
+      "name": "Phone Tool Tabs",
+      "kind": "nav",
+      "refersTo": "tool-tab-active",
+      "description": "Phone dock tabs: an icon above one word; the active tab is madder with a rhombus on the top rule.",
+      "html": "<nav class=\"ds-tabs\" role=\"tablist\" dir=\"rtl\"><button class=\"ds-tab\" role=\"tab\" aria-selected=\"true\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 4h6.5v6.5H4zM13.5 4H20v6.5h-6.5zM4 13.5h6.5V20H4zM13.5 13.5H20V20h-6.5z\"/></svg><span>أشكال</span></button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 15H3M7 11l-4 4 4 4M17.5 12.5 20 15l-2.5 2.5L15 15z\"/></svg><span>مدّ</span></button></nav>",
+      "css": ".ds-tabs{display:grid;grid-template-columns:repeat(2,96px);border-top:1px solid var(--wool-300, #c9c1b4);background:var(--wool-100, #eeeae3)} .ds-tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:56px;padding:9px 0 8px;border:0;background:transparent;color:var(--hair-600, #62574d);font:400 11.5px/1.3 var(--font-ui, 'Readex Pro Variable', 'Segoe UI', system-ui, sans-serif);cursor:pointer} .ds-tab:hover{color:var(--hair-900, #1f1915)} .ds-tab:focus-visible{outline:2px solid var(--madder-600, #962a1f);outline-offset:-2px} .ds-tab[aria-selected=true]{color:var(--madder-600, #962a1f);font-weight:600} .ds-tab[aria-selected=true]::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;translate:-50% 0;background:var(--madder-600, #962a1f);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Woven Nuqta",
+    "overview": "Midad is dressed as a strip of Sadu, the Bedouin weaving of the Arabian Peninsula, and the rhombus at its centre is read two ways at once: the diamond in the weave and the calligrapher's pen dot (nuqta), the unit Arabic letters are measured in. Undyed wool is the ground, goat-hair black-brown carries ink and type, and one madder-red band holds the shell. Every measure, slider knob, state mark and unit in the interface is that rhombus, so the editor counts in nuqat without having to write the word.\n\nThe chrome is quiet and nearly wordless. Familiar controls are icons that show their name on hover. Only the primary action (Export) and the phone's tool tabs carry a word. Explanations sit behind a small rhombus \"!\" mark instead of running text. Style options are shown as words the engine draws with the option applied, not as labels. The calligraphy is the loudest thing on screen. The interface is set in a geometric Kufi-cut sans, and Naskh appears only in the work itself.\n\nDensity is that of a working tool: 36px controls on desktop, 44px on touch, hairline wool borders, flat panels, and changes that land in short, decisive steps (140ms) instead of long slides or fades. Arabic and right-to-left is the reference layout, and every direction is logical (inline-start/inline-end), so English mirrors cleanly.",
+    "keyCharacteristics": [
+      "One madder band at the top with a woven goat-hair edge, and wool everywhere below it.",
+      "Only two angles: 90° for structure, 45° for the rhombus. Corners are square throughout.",
+      "The rhombus carries state: slider knobs, switch knobs, unit marks, the active-tab marker, the hint mark, the loading row.",
+      "Colour is semantic and scarce: madder means shell, selection and the primary action; saffron means stretch; henna means changed.",
+      "Words appear only on the hovered or focused item. Everything is available in Arabic and English."
+    ],
+    "rules": [
+      {
+        "name": "The One Dye, One Meaning Rule",
+        "body": "Madder is shell, selection and the primary action. Saffron is stretch. Henna is changed. A dye never borrows another dye's job. If saffron appears, something can be elongated.",
+        "section": "colors"
+      },
+      {
+        "name": "The Wool Ground Rule",
+        "body": "Surfaces step through wool (200 ground, 100 panels, 50 sheet and fields). Chrome never uses a grey that isn't on the wool or hair ramps.",
+        "section": "colors"
+      },
+      {
+        "name": "The Naskh Is the Work Rule",
+        "body": "The work font appears only where the user's calligraphy appears: the sheet, the composer, the letter glyph, option samples and the wordmark. Interface text is always Readex Pro.",
+        "section": "typography"
+      },
+      {
+        "name": "The Minimal Running Text Rule",
+        "body": "Controls are icons with their name in a tooltip. A word sits beside an icon only for Export and the phone tool tabs. Explanations live behind the rhombus \"!\" hint, which opens on hover on desktop and on tap on touch. No sentence is set in the chrome at rest.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper and Thread Rule",
+        "body": "Only the sheet is lifted, and only floating layers cast the float shadow. Panels, tiles and fields are flat and separated by wool borders. Selection is an inset 1px madder ring, never a shadow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Two Angles Rule",
+        "body": "Only 90° and 45° are used in the chrome. Rounded corners and circles are not part of the world. The one circle is the dot of the \"!\" inside the hint mark.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** draw every unit, knob, state marker and measure as a 45° rhombus. The rhombus is the nuqta.",
+      "**Do** keep madder for the shell, selection and the one primary action, saffron for kashida/stretch, and henna for \"modified\" only.",
+      "**Do** keep every corner square (radius 0). Separate surfaces with wool steps and 1px wool-300 borders.",
+      "**Do** make familiar controls icon-only, with their name and shortcut in a hover tip. Only Export and the phone tool tabs carry a word.",
+      "**Do** put explanations behind the rhombus \"!\" hint (hover on desktop, tap on touch), never in running UI text.",
+      "**Do** show style options as engine-drawn sample words with the option applied.",
+      "**Do** use logical properties throughout and treat Arabic/RTL as the reference. Every string exists in Arabic and English.",
+      "**Do** move in short steps: 140ms on `cubic-bezier(0.2, 0.9, 0.25, 1)`, 90ms fades for floating layers, and nothing at all under reduced motion.",
+      "**Do** keep touch targets at 40–44px on phones, with one dock tool visible at a time."
+    ],
+    "donts": [
+      "**Don't** round corners or introduce angles other than 90° and 45° in the chrome.",
+      "**Don't** use a dye outside its job, such as saffron as a generic highlight or madder as decoration.",
+      "**Don't** add labelled-field property panels, a status bar of hints, or explanatory sentences at rest.",
+      "**Don't** set interface text in the Naskh work font, or the calligraphy in the UI font.",
+      "**Don't** use neutral-black or cool-grey shadows. Shadows are goat-hair brown and limited to the four roles above.",
+      "**Don't** use hair-500 or lighter for readable text on wool. It is for borders and small marks only."
+    ]
+  }
+}
